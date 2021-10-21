@@ -66,7 +66,7 @@ const connect = async (i) => {
       //     ],
       //   },
       // }
-      console.error(`Error ${i}: ${error}`);
+      console.error(`Error ${i}: ${error.message}`);
     },
   });
 };
