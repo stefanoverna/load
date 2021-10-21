@@ -2,6 +2,8 @@ const fetch = require('node-fetch');
 const { subscribeToQuery } = require('datocms-listen');
 const EventSource = require('eventsource');
 
+let updates = 0;
+
 const connect = async (i) => {
   return await subscribeToQuery({
     eventSourceClass: EventSource,
@@ -42,9 +44,8 @@ const connect = async (i) => {
     variables: { limit: 5 },
     token: '73594ec74429bc333ed6ab1fcbc02e',
     preview: false,
-    onUpdate: (update) => {
-      // response is the GraphQL response
-      console.log(`New update ${i}!`);
+    onUpdate: () => {
+      updates += 1;
     },
     onStatusChange: (status) => {
       // status can be "connected", "connecting" or "closed"
@@ -78,3 +79,7 @@ async function run() {
 }
 
 run();
+
+setInterval(() => {
+  console.log(`Received ${updates} updates`);
+}, 5000);
