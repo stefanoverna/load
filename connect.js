@@ -82,4 +82,5 @@ run();
 
 setInterval(() => {
   console.log(`Received ${updates} updates`);
+  updates = 0;
 }, 5000);
