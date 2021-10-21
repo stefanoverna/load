@@ -9,7 +9,7 @@
   "author": "Stefano Verna",
   "license": "ISC",
   "dependencies": {
-    "datocms-listen": "0.1.4",
+    "datocms-listen": "0.1.5",
     "eventsource": "^1.1.0",
     "node-fetch": "^2.6.5"
   }
