@@ -6,6 +6,7 @@ let updates = 0;
 
 const connect = async (i) => {
   return await subscribeToQuery({
+    baseUrl: 'http://localhost:4001',
     eventSourceClass: EventSource,
     fetcher: fetch,
     query: `
@@ -41,7 +42,7 @@ const connect = async (i) => {
         title
       }
     `,
-    variables: { limit: 5 },
+    variables: { limit: 20 },
     token: '73594ec74429bc333ed6ab1fcbc02e',
     preview: false,
     onUpdate: () => {
@@ -72,8 +73,8 @@ const connect = async (i) => {
 };
 
 async function run() {
-  for (let i = 0; i < 500; i++) {
-    await new Promise(resolve => setTimeout(resolve, 100));
+  for (let i = 0; i < 1000; i++) {
+    await new Promise(resolve => setTimeout(resolve, 50));
     connect(i);
   }
 }
