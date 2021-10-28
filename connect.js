@@ -2,6 +2,9 @@ const fetch = require('node-fetch');
 const { subscribeToQuery } = require('datocms-listen');
 const EventSource = require('eventsource');
 
+const CONNECTIONS = 1000;
+const CONNECTION_LOOP_SLEEP_MS = 50;
+
 let updates = 0;
 
 const log = message => {
@@ -77,8 +80,8 @@ const connect = async (i) => {
 };
 
 async function run() {
-  for (let i = 0; i < 1000; i++) {
-    await new Promise(resolve => setTimeout(resolve, 50));
+  for (let i = 0; i < CONNECTIONS; i++) {
+    await new Promise(resolve => setTimeout(resolve, CONNECTION_LOOP_SLEEP_MS));
     connect(i);
   }
 }
