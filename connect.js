@@ -4,6 +4,10 @@ const EventSource = require('eventsource');
 
 let updates = 0;
 
+const log = message => {
+  console.log(`${(new Date()).toLocaleTimeString()}: ${message}`);
+};
+
 const connect = async (i) => {
   return await subscribeToQuery({
     baseUrl: 'http://localhost:4001',
@@ -50,7 +54,7 @@ const connect = async (i) => {
     },
     onStatusChange: (status) => {
       // status can be "connected", "connecting" or "closed"
-      console.log(`Status ${i}: ${status}!`);
+      log(`Status ${i}: ${status}!`);
     },
     onChannelError: (error) => {
       // error will be something like:
@@ -82,6 +86,6 @@ async function run() {
 run();
 
 setInterval(() => {
-  console.log(`Received ${updates} updates`);
+  log(`Received ${updates} updates`);
   updates = 0;
 }, 5000);
