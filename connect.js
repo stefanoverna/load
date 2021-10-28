@@ -5,6 +5,10 @@ const EventSource = require('eventsource');
 const CONNECTIONS = 1000;
 const CONNECTION_LOOP_SLEEP_MS = 50;
 
+const args = process.argv.slice(2);
+
+const baseUrl = args[0] || 'http://localhost:4001';
+
 let updates = 0;
 
 const log = message => {
@@ -13,7 +17,7 @@ const log = message => {
 
 const connect = async (i) => {
   return await subscribeToQuery({
-    baseUrl: 'http://localhost:4001',
+    baseUrl,
     eventSourceClass: EventSource,
     fetcher: fetch,
     query: `
