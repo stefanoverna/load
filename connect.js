@@ -2,6 +2,7 @@ import path from 'path';
 import fetch from 'node-fetch';
 import { subscribeToQuery } from 'datocms-listen';
 import EventSource from 'eventsource';
+import { query, variables, token } from './config.js';
 
 const CONNECTIONS = 1000;
 const CONNECTION_LOOP_SLEEP_MS = 50;
@@ -21,41 +22,9 @@ const connect = async (i) => {
     baseUrl,
     eventSourceClass: EventSource,
     fetcher: fetch,
-    query: `
-      query HomePage($limit: IntType) {
-        posts: allPosts(first: $limit, orderBy: _firstPublishedAt_DESC) {
-          id
-          content
-          _firstPublishedAt
-          photos {
-            responsiveImage(imgixParams: {auto: [format]}) {
-              ...imageFields
-            }
-          }
-          author {
-            name
-            avatar {
-              responsiveImage(imgixParams: {auto: [format], w: 60}) {
-                ...imageFields
-              }
-            }
-          }
-        }
-      }
-      fragment imageFields on ResponsiveImage {
-        aspectRatio
-        base64
-        height
-        sizes
-        src
-        srcSet
-        width
-        alt
-        title
-      }
-    `,
-    variables: { limit: 20 },
-    token: '73594ec74429bc333ed6ab1fcbc02e',
+    query,
+    variables,
+    token,
     preview: false,
     onUpdate: () => {
       updates += 1;
