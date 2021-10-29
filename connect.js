@@ -1,6 +1,7 @@
-const fetch = require('node-fetch');
-const { subscribeToQuery } = require('datocms-listen');
-const EventSource = require('eventsource');
+import path from 'path';
+import fetch from 'node-fetch';
+import { subscribeToQuery } from 'datocms-listen';
+import EventSource from 'eventsource';
 
 const CONNECTIONS = 1000;
 const CONNECTION_LOOP_SLEEP_MS = 50;
