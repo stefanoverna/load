@@ -2,14 +2,10 @@ import path from 'path';
 import fetch from 'node-fetch';
 import { subscribeToQuery } from 'datocms-listen';
 import EventSource from 'eventsource';
-import { query, variables, token } from './config.js';
+import { baseUrl, query, variables, token } from './config.js';
 
-const CONNECTIONS = 1000;
-const CONNECTION_LOOP_SLEEP_MS = 50;
-
-const args = process.argv.slice(2);
-
-const baseUrl = args[0] || 'http://localhost:4001';
+const CONNECTIONS = 41;
+const CONNECTION_LOOP_SLEEP_MS = 100;
 
 let updates = 0;
 

@@ -1,3 +1,6 @@
+const baseUrl = 'https://graphql-listen.datocms.com';
+// const baseUrl = 'http://localhost:4001';
+
 const query = `
   query HomePage($limit: IntType) {
     posts: allPosts(first: $limit, orderBy: _firstPublishedAt_DESC) {
@@ -34,4 +37,4 @@ const query = `
 const variables = { limit: 20 };
 const token = '73594ec74429bc333ed6ab1fcbc02e';
 
-export { query, variables, token };
+export { baseUrl, query, variables, token };
