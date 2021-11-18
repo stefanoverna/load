@@ -36,20 +36,6 @@ const connect = async (i) => {
       log('info', `Status ${i+1}: ${status}!`);
     },
     onChannelError: (error) => {
-      // error will be something like:
-      // {
-      //   code: "INVALID_QUERY",
-      //   message: "The query returned an erroneous response. Please consult the response details to understand the cause.",
-      //   response: {
-      //     errors: [
-      //       {
-      //         fields: ["query", "allBlogPosts", "nonExistingField"],
-      //         locations: [{ column: 67, line: 1 }],
-      //         message: "Field 'nonExistingField' doesn't exist on type 'BlogPostRecord'",
-      //       },
-      //     ],
-      //   },
-      // }
       log('error', `Error ${i+1}: ${error.message}`);
     },
   });
