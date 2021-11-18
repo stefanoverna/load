@@ -9,8 +9,14 @@ const CONNECTION_LOOP_SLEEP_MS = 100;
 
 let updates = 0;
 
-const log = message => {
-  console.log(`${(new Date()).toLocaleTimeString()}: ${message}`);
+const log = (type, message) => {
+  switch(type) {
+  case 'error':
+    console.error(`${(new Date()).toLocaleTimeString()}: ${message}`);
+    break;
+  default:
+    console.info(`${(new Date()).toLocaleTimeString()}: ${message}`);
+  }
 };
 
 const connect = async (i) => {
@@ -27,7 +33,7 @@ const connect = async (i) => {
     },
     onStatusChange: (status) => {
       // status can be "connected", "connecting" or "closed"
-      log(`Status ${i}: ${status}!`);
+      log('info', `Status ${i+1}: ${status}!`);
     },
     onChannelError: (error) => {
       // error will be something like:
@@ -44,7 +50,7 @@ const connect = async (i) => {
       //     ],
       //   },
       // }
-      console.error(`Error ${i}: ${error.message}`);
+      log('error', `Error ${i+1}: ${error.message}`);
     },
   });
 };
@@ -59,6 +65,6 @@ async function run() {
 run();
 
 setInterval(() => {
-  log(`Received ${updates} updates`);
+  log('info', `${updates} updates, ${connecting} connecting, ${connected} connected, ${dead} dead`);
   updates = 0;
 }, 5000);
