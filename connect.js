@@ -8,6 +8,7 @@ const CONNECTIONS = 41;
 const CONNECTION_LOOP_SLEEP_MS = 100;
 
 let updates = 0;
+const states = {};
 
 const log = (type, message) => {
   switch(type) {
@@ -19,8 +20,13 @@ const log = (type, message) => {
   }
 };
 
-const connect = async (i) => {
-  return await subscribeToQuery({
+const connect = (i) => {
+  const state = {
+    i: i,
+    errors: [],
+    status: 'closed'
+  };
+  state.unsubscribe = subscribeToQuery({
     baseUrl,
     eventSourceClass: EventSource,
     fetcher: fetch,
@@ -33,24 +39,37 @@ const connect = async (i) => {
     },
     onStatusChange: (status) => {
       // status can be "connected", "connecting" or "closed"
-      log('info', `Status ${i+1}: ${status}!`);
+      state.status = status
     },
     onChannelError: (error) => {
+      state.status = 'closed';
       log('error', `Error ${i+1}: ${error.message}`);
     },
+    onError: (errorData) => {
+      state.status = errorData.status;
+      state.errors.push(errorData.error.message);
+      log('error', `Error ${i+1}: ${state.errors.join(' -> ')}`);
+    },
   });
+  return state;
 };
 
 async function run() {
   for (let i = 0; i < CONNECTIONS; i++) {
     await new Promise(resolve => setTimeout(resolve, CONNECTION_LOOP_SLEEP_MS));
-    connect(i);
+    const state = connect(i);
+    states[state.i] = state;
   }
 }
 
 run();
 
 setInterval(() => {
-  log('info', `${updates} updates, ${connecting} connecting, ${connected} connected, ${dead} dead`);
+  const statuses = Object.keys(states).reduce((statuses, key) => {
+    const state = states[key];
+    statuses[state.status]++;
+    return statuses;
+  }, {'closed': 0, 'connecting': 0, 'connected': 0});
+  log('info', `${updates} updates, ${statuses['connecting']} connecting, ${statuses['connected']} connected, ${statuses['closed']} closed`);
   updates = 0;
-}, 5000);
+}, 1000);
