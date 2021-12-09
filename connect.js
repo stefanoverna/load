@@ -2,10 +2,7 @@ import path from 'path';
 import fetch from 'node-fetch';
 import { subscribeToQuery } from 'datocms-listen';
 import EventSource from 'eventsource';
-import { baseUrl, query, variables, token } from './config.js';
-
-const CONNECTIONS = 41;
-const CONNECTION_LOOP_SLEEP_MS = 100;
+import { baseUrl, connections, loopSleep, query, variables, token } from './config.staging.js';
 
 let updates = 0;
 const states = {};
@@ -55,8 +52,8 @@ const connect = (i) => {
 };
 
 async function run() {
-  for (let i = 0; i < CONNECTIONS; i++) {
-    await new Promise(resolve => setTimeout(resolve, CONNECTION_LOOP_SLEEP_MS));
+  for (let i = 0; i < connections; i++) {
+    await new Promise(resolve => setTimeout(resolve, loopSleep));
     const state = connect(i);
     states[state.i] = state;
   }

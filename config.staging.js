@@ -14,7 +14,11 @@ const query = `
   }
 }
 `;
+
 const token = 'c0369f3b98aed7da612c03cdd40959';
 const variables = {};
 
-export { baseUrl, query, variables, token };
+const connections = 2;
+const loopSleep = 100;
+
+export { baseUrl, connections, loopSleep, query, token, variables};

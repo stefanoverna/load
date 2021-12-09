@@ -37,4 +37,7 @@ const query = `
 const variables = { limit: 20 };
 const token = '73594ec74429bc333ed6ab1fcbc02e';
 
-export { baseUrl, query, variables, token };
+const connections = 2;
+const loopSleep = 100;
+
+export { baseUrl, connections, loopSleep, query, token, variables};
