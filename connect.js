@@ -47,6 +47,9 @@ const connect = (i) => {
       state.errors.push(errorData.error.message);
       log('error', `Error ${i+1}: ${state.errors.join(' -> ')}`);
     },
+    onEvent: (event) => {
+      log('debug', `${i+1} event (status '${event.status}', channel URL: ${event.channelUrl}), '${event.message}'`);
+    },
   });
   return state;
 };
