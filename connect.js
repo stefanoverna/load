@@ -91,7 +91,7 @@ setInterval(() => {
   Object.keys(states).forEach((key) => {
     const state = states[key];
     if (state.status !== 'connected' && state.errors.length > 0) {
-      log('debug', `Connection errors ${i+1}, status '${state.status}', channel URL ${state.channelUrl}: ${state.errors.join(' -> ')}`);
+      log('debug', `Errors ${state.i+1}, status '${state.status}', channel URL ${state.channelUrl}, errors: ${state.errors.join(' -> ')}`);
     }
   });
 }, 10000);
