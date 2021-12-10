@@ -55,12 +55,24 @@ const connect = (i) => {
   return state;
 };
 
+const showConnecting = () => {
+  setInterval(() => {
+    Object.keys(states).forEach((key) => {
+      const state = states[key];
+      if (state.status === 'connecting') {
+        log('debug', `Connecting ${state.i+1}, status '${state.status}', channel URL ${state.channelUrl}, errors: ${state.errors.join(' -> ')}`);
+      }
+    });
+  }, 10000);
+};
+
 async function run() {
   for (let i = 0; i < connections; i++) {
     await new Promise(resolve => setTimeout(resolve, loopSleep));
     const state = connect(i);
     states[state.i] = state;
   }
+  showConnecting();
 }
 
 run();
