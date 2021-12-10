@@ -37,7 +37,7 @@ const connect = (i) => {
     },
     onStatusChange: (status) => {
       // status can be "connected", "connecting" or "closed"
-      state.status = status
+      state.status = status;
     },
     onChannelError: (error) => {
       state.status = 'closed';

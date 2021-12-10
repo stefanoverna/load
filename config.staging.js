@@ -21,4 +21,4 @@ const variables = {};
 const connections = 2;
 const loopSleep = 100;
 
-export { baseUrl, connections, loopSleep, query, token, variables};
+export { baseUrl, connections, loopSleep, query, token, variables };
