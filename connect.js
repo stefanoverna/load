@@ -21,7 +21,8 @@ const connect = (i) => {
   const state = {
     i: i,
     errors: [],
-    status: 'closed'
+    status: 'closed',
+    channelUrl: null,
   };
   state.unsubscribe = subscribeToQuery({
     baseUrl,
@@ -48,7 +49,7 @@ const connect = (i) => {
       log('error', `Error ${i+1}: ${state.errors.join(' -> ')}`);
     },
     onEvent: (event) => {
-      log('debug', `${i+1} event (status '${event.status}', channel URL: ${event.channelUrl}), '${event.message}'`);
+      state.channelUrl = event.channelUrl;
     },
   });
   return state;
@@ -73,3 +74,12 @@ setInterval(() => {
   log('info', `${updates} updates, ${statuses['connecting']} connecting, ${statuses['connected']} connected, ${statuses['closed']} closed`);
   updates = 0;
 }, 1000);
+
+setInterval(() => {
+  Object.keys(states).forEach((key) => {
+    const state = states[key];
+    if (state.status !== 'connected' && state.errors.length > 0) {
+      log('debug', `Connection errors ${i+1}, status '${state.status}', channel URL ${state.channelUrl}: ${state.errors.join(' -> ')}`);
+    }
+  });
+}, 10000);
