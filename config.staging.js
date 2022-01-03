@@ -15,7 +15,7 @@ const query = `
 }
 `;
 
-const token = 'c0369f3b98aed7da612c03cdd40959';
+const token = 'd71a27dd2d1ff400ffbc2490ef5e72';
 const variables = {};
 
 const connections = 2;

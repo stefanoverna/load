@@ -20,3 +20,11 @@ Modify config.js.
 ```sh
 $ node connect.js
 ```
+
+# Output
+
+* Every second, connection status statistics are printed,
+* If connections have had errors, a summary is printed every 10s,
+* After all connections have been initiated, each non-connected
+  connection is listed, along with the list of errors that it has
+  experienced.
