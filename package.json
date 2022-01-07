@@ -10,7 +10,7 @@
   "author": "Stefano Verna",
   "license": "ISC",
   "dependencies": {
-    "datocms-listen": "gitlab:joeyates/datocms-listen#feature/on-error",
+    "datocms-listen": "^0.1.7",
     "eventsource": "^1.1.0",
     "node-fetch": "^2.6.5"
   }
